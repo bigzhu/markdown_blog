@@ -8,7 +8,6 @@ sys.path.append('./markdown-search')
 import tornado.ioloop
 import tornado.web
 import public_bz
-import markdown2
 
 from tornado.web import RequestHandler
 import tornado_bz
@@ -16,6 +15,23 @@ import sys
 from markdown_search import search
 
 MD_PATH = home + '/Dropbox/blog/data/'
+
+import misaka
+
+
+def gfm(str_md=''):
+    '''
+    transform the markdown text to html, using github favoured markdown
+    usage: str_html = gfm(str_md)
+    '''
+    str_html = ''
+    return misaka.html(str_md, extensions=misaka.EXT_FENCED_CODE | misaka.EXT_NO_INTRA_EMPHASIS)
+    # str_html = misaka.html(str_md,
+    #                        extensions=misaka.EXT_NO_INTRA_EMPHASIS | misaka.EXT_FENCED_CODE |
+    #                        misaka.EXT_AUTOLINK | misaka.HTML_HARD_WRAP |
+    #                        misaka.EXT_TABLES | misaka.HTML_USE_XHTML |
+    #                        misaka.HTML_HARD_WRAP)
+    return str_html
 
 
 def getContent(name):
@@ -42,8 +58,11 @@ class blog(RequestHandler):
         else:
             print name
             content = getContent(name)
-            content = markdown2.markdown(content)
-        self.render('./blog.html', title=name, content=content)
+            content = gfm(content)
+
+            if name.endswith('.md'):
+                name = name[:-len('.md')]
+            self.render('./blog.html', title=name, content=content)
 
 
 if __name__ == "__main__":

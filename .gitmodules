@@ -1,3 +1,9 @@
 [submodule "markdown-search"]
 	path = markdown-search
 	url = https://github.com/bigzhu/markdown-search
+[submodule "static/markdown-css-themes"]
+	path = static/markdown-css-themes
+	url = https://github.com/jasonm23/markdown-css-themes
+[submodule "static/github-markdown-css"]
+	path = static/github-markdown-css
+	url = https://github.com/sindresorhus/github-markdown-css

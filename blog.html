@@ -1,21 +1,33 @@
 <!doctype html>
 
 <html lang="cn">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-  <title>{{title}}</title>
-  <meta name="description" content="The BigZhu's Blog">
-  <meta name="author" content="BigZhu">
+    <title>{{title}}</title>
+    <meta name="description" content="The BigZhu's Blog">
+    <meta name="author" content="BigZhu">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
-  <!--[if lt IE 9]>
+    <link rel="stylesheet" href="/static/github-markdown-css/github-markdown.css">
+    <style>
+      .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+      }
+    </style>
+    <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
-</head>
+    <![endif]-->
+  </head>
 
-<body>
-  {{content}}
-</body>
+  <body>
+
+    <article class="markdown-body">
+    <h1>{{title}}</h1>
+    {{content}}
+    </article>
+  </body>
 </html>
