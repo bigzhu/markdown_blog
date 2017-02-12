@@ -16,7 +16,30 @@ from markdown_search import search
 
 MD_PATH = home + '/Dropbox/blog/data/'
 
-import misaka
+import houdini as h
+import misaka as m
+from pygments import highlight
+from pygments.formatters import HtmlFormatter, ClassNotFound
+from pygments.lexers import get_lexer_by_name
+
+
+class HighlighterRenderer(m.HtmlRenderer):
+
+    def blockcode(self, text, lang):
+        try:
+            lexer = get_lexer_by_name(lang, stripall=True)
+        except ClassNotFound:
+            lexer = None
+
+        if lexer:
+            formatter = HtmlFormatter()
+            return highlight(text, lexer, formatter)
+        # default
+        return '\n<pre><code>{}</code></pre>\n'.format(
+            h.escape_html(text.strip()))
+
+renderer = HighlighterRenderer()
+md = m.Markdown(renderer, extensions=('fenced-code',))
 
 
 def gfm(str_md=''):
@@ -24,14 +47,14 @@ def gfm(str_md=''):
     transform the markdown text to html, using github favoured markdown
     usage: str_html = gfm(str_md)
     '''
-    str_html = ''
-    return misaka.html(str_md, extensions=misaka.EXT_FENCED_CODE | misaka.EXT_NO_INTRA_EMPHASIS)
+    return md(str_md)
+    return md(str_md, extensions=m.EXT_FENCED_CODE | m.EXT_NO_INTRA_EMPHASIS | m.EXT_HIGHLIGHT)
     # str_html = misaka.html(str_md,
     #                        extensions=misaka.EXT_NO_INTRA_EMPHASIS | misaka.EXT_FENCED_CODE |
     #                        misaka.EXT_AUTOLINK | misaka.HTML_HARD_WRAP |
     #                        misaka.EXT_TABLES | misaka.HTML_USE_XHTML |
     #                        misaka.HTML_HARD_WRAP)
-    return str_html
+    # return str_html
 
 
 def getContent(name):
