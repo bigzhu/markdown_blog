@@ -1,0 +1,3 @@
+[submodule "markdown-search"]
+	path = markdown-search
+	url = https://github.com/bigzhu/markdown-search
