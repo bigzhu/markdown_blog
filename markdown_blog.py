@@ -22,6 +22,8 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter, ClassNotFound
 from pygments.lexers import get_lexer_by_name
 
+NOT_IN = ['mac app id passwd.md']
+
 
 class HighlighterRenderer(m.HtmlRenderer):
 
@@ -48,7 +50,6 @@ def gfm(str_md=''):
     usage: str_html = gfm(str_md)
     '''
     return md(str_md)
-    return md(str_md, extensions=m.EXT_FENCED_CODE | m.EXT_NO_INTRA_EMPHASIS | m.EXT_HIGHLIGHT)
     # str_html = misaka.html(str_md,
     #                        extensions=misaka.EXT_NO_INTRA_EMPHASIS | misaka.EXT_FENCED_CODE |
     #                        misaka.EXT_AUTOLINK | misaka.HTML_HARD_WRAP |
@@ -58,6 +59,8 @@ def gfm(str_md=''):
 
 
 def getContent(name):
+    if name in NOT_IN:
+        return '# 不要乱访问哦! 这不是你有权限可以看的东西!'
     try:
         name_file = open(MD_PATH + name, 'r')
         content = name_file.read()
@@ -75,8 +78,8 @@ class blog(RequestHandler):
     '''
 
     def get(self, name=None):
-        if name is None:
-            mds = search(MD_PATH, '*')
+        if name is None or name == '':
+            mds = search(MD_PATH, '*', NOT_IN)
             self.redirect('/' + mds[0][0])
         else:
             print name
