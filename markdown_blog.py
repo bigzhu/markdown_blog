@@ -22,7 +22,12 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter, ClassNotFound
 from pygments.lexers import get_lexer_by_name
 
-NOT_IN = ['mac app id passwd.md']
+NOT_IN = ['mac app id passwd']
+
+
+def removeSuffix(name):
+    if name.endswith('.md'):
+        return name[:-len('.md')]
 
 
 class HighlighterRenderer(m.HtmlRenderer):
@@ -62,7 +67,7 @@ def getContent(name):
     if name in NOT_IN:
         return '# 不要乱访问哦! 这不是你有权限可以看的东西!'
     try:
-        name_file = open(MD_PATH + name, 'r')
+        name_file = open(MD_PATH + name + '.md', 'r')
         content = name_file.read()
         name_file.close()
         return content
@@ -80,14 +85,13 @@ class blog(RequestHandler):
     def get(self, name=None):
         if name is None or name == '':
             mds = search(MD_PATH, '*', NOT_IN)
-            self.redirect('/' + mds[0][0])
+            name = removeSuffix(mds[0][0])
+            self.redirect('/' + name)
         else:
             print name
             content = getContent(name)
             content = gfm(content)
 
-            if name.endswith('.md'):
-                name = name[:-len('.md')]
             self.render('./blog.html', title=name, content=content)
 
 
