@@ -26,10 +26,25 @@
   </head>
 
   <body>
-
     <article class="markdown-body">
+    <header>
     <h1>{{title}}</h1>
+    <p class="meta">
+    modify by <a href="http://www.lorstone.com" target="blank">bigzhu</a> at <time datetime="{{ time.strftime('%Y-%m-%d-%H:%M:%S', modify_time)  }}">{{ time.strftime('%Y年%m月%d日%H:%M:%S', modify_time)  }}</time>
+    </p>
+    </header>
     {{content}}
+    {% if pre is not None%}
+    <p>
+    <a href="/{{pre}}" >←  {{pre}} </a>
+    </p>
+    {% end %}
+    {% if old is not None%}
+    <p>
+    <a href="/{{old}}" >{{old}} → </a>
+    </p>
+    {% end %}
+
     </article>
   </body>
 </html>

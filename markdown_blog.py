@@ -7,6 +7,8 @@ sys.path.append(home + '/lib_p_bz')
 sys.path.append('./markdown-search')
 import tornado.ioloop
 import tornado.web
+import time
+import os
 import public_bz
 
 from tornado.web import RequestHandler
@@ -76,6 +78,31 @@ def getContent(name):
         return '0'
 
 
+def getModifyTime(name):
+    modify_time = time.localtime(os.path.getmtime(MD_PATH + name + '.md'))
+    return modify_time
+
+
+def preAndOld(name):
+    mds = search(MD_PATH, '*', NOT_IN)
+    for index, item in enumerate(mds):
+        print item[0]
+        print name
+        if item[0] == name + '.md':
+            break
+    else:
+        index = -1
+    print index
+
+    if len(mds) < 2 or index == -1:
+        return None, None
+    if index == 0:
+        return None, removeSuffix(mds[index + 1][0])
+    if index == len(mds):
+        return removeSuffix(mds[index - 1][0]), None
+    return removeSuffix(mds[index - 1][0]), removeSuffix(mds[index + 1][0])
+
+
 class blog(RequestHandler):
 
     '''
@@ -91,8 +118,10 @@ class blog(RequestHandler):
             print name
             content = getContent(name)
             content = gfm(content)
+            modify_time = getModifyTime(name)
+            pre, old = preAndOld(name)
 
-            self.render('./blog.html', title=name, content=content)
+            self.render('./blog.html', title=name, content=content, time=time, modify_time=modify_time, pre=pre, old=old)
 
 
 if __name__ == "__main__":
