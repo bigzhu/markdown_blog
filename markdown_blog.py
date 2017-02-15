@@ -48,7 +48,7 @@ class HighlighterRenderer(m.HtmlRenderer):
             h.escape_html(text.strip()))
 
 renderer = HighlighterRenderer()
-md = m.Markdown(renderer, extensions=('fenced-code',))
+md = m.Markdown(renderer, extensions=('fenced-code', 'tables'))
 
 
 def gfm(str_md=''):
