@@ -14,10 +14,17 @@
     <style>
       .markdown-body {
         box-sizing: border-box;
-        min-width: 200px;
-        max-width: 980px;
         margin: 0 auto;
-        padding: 45px;
+        padding: 5px;
+      }
+      @media screen and (min-width: 992px) {
+        .markdown-body {
+          box-sizing: border-box;
+          min-width: 200px;
+          max-width: 980px;
+          margin: 0 auto;
+          padding: 45px;
+        }
       }
       #search {
         float: right;
@@ -66,18 +73,18 @@
     </article>
     <script>
       function dispatch() {
-      var q = document.getElementById("q");
-      if (q.value != "") {
-      var url = 'https://www.google.com/search?q=site:bigzhu.lorstone.com %20' + q.value;
-      if (navigator.userAgent.indexOf('iPad') > -1 || navigator.userAgent.indexOf('iPod') > -1 || navigator.userAgent.indexOf('iPhone') > -1) {
-      location.href = url;
-      } else {
-      window.open(url, "_blank");
-      }
-      return false;
-      } else {
-      return false;
-      }
+        var q = document.getElementById("q");
+        if (q.value != "") {
+          var url = 'https://www.google.com/search?q=site:bigzhu.lorstone.com %20' + q.value;
+          if (navigator.userAgent.indexOf('iPad') > -1 || navigator.userAgent.indexOf('iPod') > -1 || navigator.userAgent.indexOf('iPhone') > -1) {
+            location.href = url;
+            } else {
+            window.open(url, "_blank");
+          }
+          return false;
+          } else {
+          return false;
+        }
       }
     </script>
   </body>
