@@ -71,6 +71,8 @@ def getContent(name):
     try:
         name_file = open(MD_PATH + name + '.md', 'r')
         content = name_file.read()
+        if 'status: draft' in content:
+            return '# 这是一个机密文件, 不允许查看!'
         name_file.close()
         return content
     except IOError:
@@ -84,7 +86,7 @@ def getModifyTime(name):
 
 
 def preAndOld(name):
-    mds = search(MD_PATH, '*', NOT_IN)
+    mds = search(MD_PATH, '*.md', NOT_IN)
     for index, item in enumerate(mds):
         print item[0]
         print name
@@ -111,15 +113,15 @@ class blog(RequestHandler):
 
     def get(self, name=None):
         if name is None or name == '':
-            mds = search(MD_PATH, '*', NOT_IN)
+            mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
             self.redirect('/' + name)
         else:
-            print name
             content = getContent(name)
             content = gfm(content)
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
+            print pre, old
 
             self.render('./blog.html', title=name, content=content, time=time, modify_time=modify_time, pre=pre, old=old)
 
