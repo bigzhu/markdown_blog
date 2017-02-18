@@ -25,6 +25,9 @@ with open('config.ini', 'r') as cfg_file:
     AUTHOR = config.get('config', 'author')
     AUTHOR_LINK = config.get('config', 'author_link')
 
+if NOT_IN:
+    NOT_IN = NOT_IN.split(',')
+
 MD_PATH = home + '/Dropbox/blog/'
 
 import houdini as h
@@ -73,7 +76,7 @@ def gfm(str_md=''):
 
 
 def getContent(name):
-    if name in NOT_IN.split(','):
+    if name in NOT_IN:
         return '# 不要乱访问哦! 这不是你有权限可以看的东西!'
     try:
         name_file = open(MD_PATH + name + '.md', 'r')
