@@ -16,15 +16,22 @@ import tornado_bz
 import sys
 from markdown_search import search
 
-MD_PATH = home + '/Dropbox/blog/data/'
+import ConfigParser
+config = ConfigParser.ConfigParser()
+with open('config.ini', 'r') as cfg_file:
+    config.readfp(cfg_file)
+    MD_PATH = config.get('config', 'md_path')
+    NOT_IN = config.get('config', 'not_in')
+    AUTHOR = config.get('config', 'author')
+    AUTHOR_LINK = config.get('config', 'author_link')
+
+MD_PATH = home + '/Dropbox/blog/'
 
 import houdini as h
 import misaka as m
 from pygments import highlight
 from pygments.formatters import HtmlFormatter, ClassNotFound
 from pygments.lexers import get_lexer_by_name
-
-NOT_IN = ['mac app id passwd']
 
 
 def removeSuffix(name):
@@ -66,7 +73,7 @@ def gfm(str_md=''):
 
 
 def getContent(name):
-    if name in NOT_IN:
+    if name in NOT_IN.split(','):
         return '# 不要乱访问哦! 这不是你有权限可以看的东西!'
     try:
         name_file = open(MD_PATH + name + '.md', 'r')
