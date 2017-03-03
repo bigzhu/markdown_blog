@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#/usr/bin/env python
 # -*- coding: utf-8 -*-
 from os.path import expanduser
 import sys
@@ -58,7 +58,23 @@ class HighlighterRenderer(m.HtmlRenderer):
             h.escape_html(text.strip()))
 
 renderer = HighlighterRenderer()
-md = m.Markdown(renderer, extensions=('fenced-code', 'tables'))
+ex = (
+    'tables',
+    'fenced-code',
+    'footnotes',
+    'autolink',
+    'strikethrough',
+    'underline',
+    'highlight',
+    'quote',
+    'superscript',
+    'math',
+    # 'no-intra-emphasis',
+    'space-headers',
+    'math-explicit',
+    'disable-indented-code',
+)
+md = m.Markdown(renderer, extensions=ex)
 
 
 def gfm(str_md=''):
@@ -86,7 +102,7 @@ def getContent(name):
         name_file.close()
         return content
     except IOError:
-        print public_bz.getExpInfoAll()
+        print(public_bz.getExpInfoAll())
         return '0'
 
 
@@ -98,13 +114,12 @@ def getModifyTime(name):
 def preAndOld(name):
     mds = search(MD_PATH, '*.md', NOT_IN)
     for index, item in enumerate(mds):
-        print item[0]
-        print name
+        print(item[0])
+        print(name)
         if item[0] == name + '.md':
             break
     else:
         index = -1
-    print index
 
     if len(mds) < 2 or index == -1:
         return None, None
@@ -131,7 +146,6 @@ class blog(RequestHandler):
             content = gfm(content)
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
-            print pre, old
 
             self.render('./blog.html', title=name, content=content, time=time, modify_time=modify_time, pre=pre, old=old)
 
@@ -143,7 +157,7 @@ if __name__ == "__main__":
         port = int(sys.argv[1])
     else:
         port = 8888
-    print port
+    print(port)
 
     url_map = tornado_bz.getURLMap(the_class)
     url_map.append((r'/(.*)', blog))
