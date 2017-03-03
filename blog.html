@@ -7,7 +7,7 @@
 
     <title>{{title}}</title>
     <meta name="description" content="The BigZhu's Blog">
-    <meta name="author" content="BigZhu">
+    <meta name="author" content="{{author}}">
 
     <link rel="stylesheet" href="/static/github-markdown-css/github-markdown.css">
     <link rel="stylesheet" href="/static/style.css">
@@ -46,7 +46,7 @@
     <h1>{{title}}</h1>
 
     <p class="meta">
-    <a href="http://www.lorstone.com" target="blank">BigZhu</a> <time datetime="{{ time.strftime('%Y-%m-%d-%H:%M:%S', modify_time)  }}">{{ time.strftime('%Y-%m-%d %H:%M:%S', modify_time)  }}</time>
+    <a href="{{author_link}}" target="blank">{{author}}</a> <time datetime="{{ time.strftime('%Y-%m-%d-%H:%M:%S', modify_time)  }}">{{ time.strftime('%Y-%m-%d %H:%M:%S', modify_time)  }}</time>
     </p>
 
     </header>

@@ -1,4 +1,4 @@
-#/usr/bin/env python
+# /usr/bin/env python
 # -*- coding: utf-8 -*-
 from os.path import expanduser
 import sys
@@ -147,7 +147,11 @@ class blog(RequestHandler):
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
 
-            self.render('./blog.html', title=name, content=content, time=time, modify_time=modify_time, pre=pre, old=old)
+            self.render('./blog.html', title=name, content=content, time=time,
+                        modify_time=modify_time, pre=pre, old=old,
+                        author=AUTHOR,
+                        author_link=AUTHOR_LINK
+                        )
 
 
 if __name__ == "__main__":
