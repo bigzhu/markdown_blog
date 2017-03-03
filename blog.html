@@ -16,6 +16,8 @@
         box-sizing: border-box;
         margin: 0 auto;
         padding: 5px;
+        position: relative;
+        padding-top: 30px;
       }
       @media screen and (min-width: 992px) {
         .markdown-body {
@@ -26,8 +28,70 @@
           padding: 45px;
         }
       }
+      .pre {
+        float: left;
+      }
+      .old {
+        float: right;
+      }
       #search {
         float: right;
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        margin-top: 0px;
+        border-top: 5px solid rgba(0, 0, 0, .15);
+      }
+
+      .logo {
+        margin-top: 0px;
+        margin-bottom: 4px;
+        padding-bottom: 0px;
+        border-style: none;
+        -webkit-transition: all 500ms ease;
+        transition: all 500ms ease;
+        font-family: 'Ubuntu, Helvetica, sans-serif';
+        color: rgba(51, 51, 51, .81);
+        font-size: 26px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .logo:hover {
+        color: #333;
+      }
+      .web-address {
+        display: inline-block;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        border: 0px none #000;
+        font-family: Georgia, Times, 'Times New Roman', serif;
+        color: #999;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .web-address:hover {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+      }
+      .logo-web {
+        display: inline-block;
+        padding: 20px;
+      }
+      .copy-right {
+        position: absolute;
+        right: 103px;
+        bottom: 32px;
+        display: inline-block;
+        float: right;
+        font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+        color: rgba(51, 51, 51, .75);
+        font-size: 13px;
       }
     </style>
     <!--[if lt IE 9]>
@@ -37,35 +101,37 @@
 
   <body>
     <article class="markdown-body">
-    <div id="search">
-      <form action="https://www.google.com" onsubmit="return dispatch()" target="_blank">
-        <input type="text" maxlength="44" name="q" id="q" value="">
-      </form>
-    </div>
-    <header>
-    <h1>{{title}}</h1>
+      <div id="search">
+        <form action="https://www.google.com" onsubmit="return dispatch()" target="_blank">
+          <input type="text" maxlength="44" name="q" id="q" value="">
+        </form>
+      </div>
+      <header>
+        <h1>{{title}}</h1>
 
-    <p class="meta">
-    <a href="{{author_link}}" target="blank">{{author}}</a> <time datetime="{{ time.strftime('%Y-%m-%d-%H:%M:%S', modify_time)  }}">{{ time.strftime('%Y-%m-%d %H:%M:%S', modify_time)  }}</time>
-    </p>
-
-    </header>
-    {{content}}
-    <hr>
-    <p>
-    {% if pre is not None%}
-    <a href="/{{pre}}" >←  {{pre}} </a>
-    {% end %}
-    &nbsp;&nbsp;
-    &nbsp;&nbsp;
-    &nbsp;&nbsp;
-    &nbsp;&nbsp;
-    {% if old is not None%}
-    <a href="/{{old}}" >{{old}} → </a>
-    {% end %}
-    </p>
-
-
+      <p class="meta">
+      <a href="{{author_link}}" target="blank">{{author}}</a> <time datetime="{{ time.strftime('%Y-%m-%d-%H:%M:%S', modify_time)  }}">{{ time.strftime('%Y-%m-%d %H:%M:%S', modify_time)  }}</time>
+      </p>
+      </header>
+      {{content}}
+      <hr>
+      <p>
+        {% if pre is not None%}
+          <a class="pre" href="/{{pre}}" >←  {{pre}} </a>
+            {% end %}
+            
+            {% if old is not None%}
+          <a class="old" href="/{{old}}" >{{old}} → </a>
+        {% end %}
+      </p>
+      <div class="footer">
+        <div class="w-container">
+          <div class="logo-web">
+            <h3 class="logo"><a href="http://www.lorstone.com" class="logo">Lorstone.</a></h3><a class="web-address" href="http://www.lorstone.com">www.lorstone.com</a>
+          </div>
+          <div class="copy-right">© Copyright 2016 备案/许可证编号为：滇ICP备16009771号</div>
+        </div>
+      </div>
     </article>
     <script>
       function dispatch() {
