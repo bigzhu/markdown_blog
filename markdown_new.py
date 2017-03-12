@@ -32,6 +32,9 @@ MD_PATH = home + '/Dropbox/blog/'
 
 import markdown
 from mdx_gfm import GithubFlavoredMarkdownExtension
+from markdown.extensions.toc import TocExtension
+md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension(), TocExtension(baselevel=3), 'markdown.extensions.toc'])
+# md = markdown.Markdown(extensions=['markdown.extensions.toc'])
 
 
 def removeSuffix(name):
@@ -92,14 +95,16 @@ class blog(RequestHandler):
         else:
             content = getContent(name)
 
-            content = markdown.markdown(content, extensions=[GithubFlavoredMarkdownExtension()])
+            content = md.convert(content)
+            print md.toc
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
 
             self.render('./blog.html', title=name, content=content, time=time,
                         modify_time=modify_time, pre=pre, old=old,
                         author=AUTHOR,
-                        author_link=AUTHOR_LINK
+                        author_link=AUTHOR_LINK,
+                        toc=md.toc
                         )
 
 
