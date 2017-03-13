@@ -18,8 +18,10 @@
                 padding: 8px;
                 position: relative;
             }
-            #search {
-                display: none;
+            @media screen and (max-width: 600px) {
+                .mobile-hidden {
+                    display: none !important;
+                }
             }
             @media screen and (min-width: 992px) {
                 .markdown-body {
@@ -30,7 +32,6 @@
                     padding-bottom: 180px;
                 }
                 #search {
-                    display: block;
                     float: right;
                 }
             }
@@ -120,7 +121,7 @@
 
     <body>
         <article class="markdown-body">
-        <div id="search">
+        <div class="mobile-hidden" id="search">
             <form action="https://www.google.com" onsubmit="return dispatch()" target="_blank">
                 <input type="text" maxlength="44" name="q" id="q" value="">
             </form>
@@ -144,30 +145,30 @@
         {% if old is not None%}
         <a class="old" href="/{{old}}" >{{old}} → </a>
         {% end %}
-      </p>
-    </article>
-    <div class="footer">
-        <div class="container">
-          <div class="logo-web">
-            <h3 class="logo"><a href="http://www.lorstone.com" class="logo">Lorstone.</a></h3><a class="web-address" href="http://www.lorstone.com">www.lorstone.com</a>
-          </div>
-          <div class="copy-right">© Copyright 2017 All rights reserved.</br>Powered by <a href="https://github.com/bigzhu/markdown_blog">markdown_blog</a></div>
-        </div>
-        <script>
-            function dispatch() {
-                var q = document.getElementById("q");
-                if (q.value != "") {
-                    var url = 'https://www.google.com/search?q=site:bigzhu.lorstone.com %20' + q.value;
-                    if (navigator.userAgent.indexOf('iPad') > -1 || navigator.userAgent.indexOf('iPod') > -1 || navigator.userAgent.indexOf('iPhone') > -1) {
-                        location.href = url;
+        </p>
+        </article>
+        <div class="footer">
+            <div class="container">
+                <div class="logo-web">
+                    <h3 class="logo"><a href="http://www.lorstone.com" class="logo">Lorstone.</a></h3><a class="web-address" href="http://www.lorstone.com">www.lorstone.com</a>
+                </div>
+                <div class="copy-right">© Copyright 2017 All rights reserved.</br>Powered by <a href="https://github.com/bigzhu/markdown_blog">markdown_blog</a></div>
+            </div>
+            <script>
+                function dispatch() {
+                    var q = document.getElementById("q");
+                    if (q.value != "") {
+                        var url = 'https://www.google.com/search?q=site:bigzhu.lorstone.com %20' + q.value;
+                        if (navigator.userAgent.indexOf('iPad') > -1 || navigator.userAgent.indexOf('iPod') > -1 || navigator.userAgent.indexOf('iPhone') > -1) {
+                            location.href = url;
+                            } else {
+                            window.open(url, "_blank");
+                        }
+                        return false;
                         } else {
-                        window.open(url, "_blank");
+                        return false;
                     }
-                    return false;
-                    } else {
-                    return false;
                 }
-            }
-        </script>
-    </body>
-</html>
+            </script>
+        </body>
+    </html>
