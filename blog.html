@@ -183,5 +183,23 @@
                 }
             }
         </script>
+        <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+        <script>
+            var body = document.getElementsByTagName("body")[0];
+            var mc = new Hammer(body);
+            mc.on('panleft panright', function(ev) {
+                console.log()
+                if (ev.velocityX >=0.5) {
+                    {% if pre is not None%}
+                    window.location = '/'+'{{pre}}';
+                    {% end %}
+                }
+                if (ev.velocityX <=-0.5) {
+                    {% if old is not None%}
+                    window.location = '/'+'{{old}}';
+                    {% end %}
+                }
+            });
+        </script>
     </body>
 </html>
