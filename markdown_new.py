@@ -33,15 +33,15 @@ MD_PATH = home + '/Dropbox/blog/'
 try:
     import pygments
 except ImportError:
-    print 'you need install pygments, please run:'
-    print 'sudo pip install pygments'
+    print('you need install pygments, please run:')
+    print('sudo pip install pygments')
     exit(1)
 import markdown
 try:
     from mdx_gfm import GithubFlavoredMarkdownExtension
 except ImportError:
-    print 'you need install py-gfm, please run:'
-    print 'sudo pip install py-gfm'
+    print('you need install py-gfm, please run:')
+    print('sudo pip install py-gfm')
     exit(1)
 from markdown.extensions.toc import TocExtension
 md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension(), TocExtension(baselevel=3), 'markdown.extensions.toc'])
@@ -107,7 +107,7 @@ class blog(RequestHandler):
             content = getContent(name)
 
             content = md.convert(content)
-            print md.toc
+            print(md.toc)
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
 
