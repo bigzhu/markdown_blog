@@ -31,7 +31,12 @@ if NOT_IN:
 MD_PATH = home + '/Dropbox/blog/'
 
 import markdown
-from mdx_gfm import GithubFlavoredMarkdownExtension
+try:
+    from mdx_gfm import GithubFlavoredMarkdownExtension
+except ImportError:
+    print 'you need install py-gfm, please run:'
+    print 'sudo pip install py-gfm'
+    exit(1)
 from markdown.extensions.toc import TocExtension
 md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension(), TocExtension(baselevel=3), 'markdown.extensions.toc'])
 # md = markdown.Markdown(extensions=['markdown.extensions.toc'])
