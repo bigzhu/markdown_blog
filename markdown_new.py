@@ -30,6 +30,12 @@ if NOT_IN:
 
 MD_PATH = home + '/Dropbox/blog/'
 
+try:
+    import pygments
+except ImportError:
+    print 'you need install pygments, please run:'
+    print 'sudo pip install pygments'
+    exit(1)
 import markdown
 try:
     from mdx_gfm import GithubFlavoredMarkdownExtension
