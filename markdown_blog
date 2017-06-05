@@ -4,6 +4,7 @@ from os.path import expanduser
 import sys
 home = expanduser("~")
 sys.path.append(home + '/lib_p_bz')
+sys.path.append('./bz_lib_p')
 sys.path.append('./markdown-search')
 import tornado.ioloop
 import tornado.web
@@ -41,6 +42,7 @@ except ImportError:
     print('you need install pygments, please run:')
     print('sudo pip install pygments')
     exit(1)
+print('pygments version: ', pygments.__version__)
 import markdown
 try:
     from mdx_gfm import GithubFlavoredMarkdownExtension
