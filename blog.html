@@ -151,11 +151,11 @@
         <hr>
         <p>
         {% if pre is not None%}
-        <a class="pre" href="/{{pre}}" >←  {{pre}} </a>
+        <a class="pre" href="/{{urllib.parse.quote(pre)}}" >←  {{pre}} </a>
         {% end %}
 
         {% if old is not None%}
-        <a class="old" href="/{{old}}" >{{old}} → </a>
+        <a class="old" href="/{{urllib.parse.quote(old)}}" >{{old}} → </a>
         {% end %}
         </p>
         </article>

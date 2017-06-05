@@ -11,6 +11,7 @@ import tornado.web
 import time
 import os
 import public_bz
+import urllib
 
 from tornado.web import RequestHandler
 import tornado_bz
@@ -122,7 +123,8 @@ class blog(RequestHandler):
                         modify_time=modify_time, pre=pre, old=old,
                         author=AUTHOR,
                         author_link=AUTHOR_LINK,
-                        toc=md.toc
+                        toc=md.toc,
+                        urllib=urllib
                         )
 
 
