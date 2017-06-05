@@ -16,8 +16,13 @@ import tornado_bz
 import sys
 from markdown_search import search
 
-import ConfigParser
-config = ConfigParser.ConfigParser()
+try:
+    import ConfigParser
+    config = ConfigParser.ConfigParser()
+except ImportError:
+    import configparser
+    config = configparser.ConfigParser()
+
 with open('config.ini', 'r') as cfg_file:
     config.readfp(cfg_file)
     MD_PATH = config.get('config', 'md_path')
