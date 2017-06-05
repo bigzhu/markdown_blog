@@ -4,6 +4,7 @@ from os.path import expanduser
 import sys
 home = expanduser("~")
 sys.path.append(home + '/lib_p_bz')
+sys.path.append('./bz_lib_p')
 sys.path.append('./markdown-search')
 import tornado.ioloop
 import tornado.web
@@ -16,8 +17,13 @@ import tornado_bz
 import sys
 from markdown_search import search
 
-import ConfigParser
-config = ConfigParser.ConfigParser()
+try:
+    import ConfigParser
+    config = ConfigParser.ConfigParser()
+except ImportError:
+    import configparser
+    config = configparser.ConfigParser()
+
 with open('config.ini', 'r') as cfg_file:
     config.readfp(cfg_file)
     MD_PATH = config.get('config', 'md_path')
@@ -30,65 +36,28 @@ if NOT_IN:
 
 MD_PATH = home + '/Dropbox/blog/'
 
-import houdini as h
-import misaka as m
-from pygments import highlight
-from pygments.formatters import HtmlFormatter, ClassNotFound
-from pygments.lexers import get_lexer_by_name
+try:
+    import pygments
+except ImportError:
+    print('you need install pygments, please run:')
+    print('sudo pip install pygments')
+    exit(1)
+print('pygments version: ', pygments.__version__)
+import markdown
+try:
+    from mdx_gfm import GithubFlavoredMarkdownExtension
+except ImportError:
+    print('you need install py-gfm, please run:')
+    print('sudo pip install py-gfm')
+    exit(1)
+from markdown.extensions.toc import TocExtension
+md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension(), TocExtension(baselevel=3), 'markdown.extensions.toc'])
+# md = markdown.Markdown(extensions=['markdown.extensions.toc'])
 
 
 def removeSuffix(name):
     if name.endswith('.md'):
         return name[:-len('.md')]
-
-
-class HighlighterRenderer(m.HtmlRenderer):
-
-    def blockcode(self, text, lang):
-        try:
-            lexer = get_lexer_by_name(lang, stripall=True)
-        except ClassNotFound:
-            lexer = None
-
-        if lexer:
-            formatter = HtmlFormatter()
-            return highlight(text, lexer, formatter)
-        # default
-        return '\n<pre><code>{}</code></pre>\n'.format(
-            h.escape_html(text.strip()))
-
-renderer = HighlighterRenderer()
-ex = (
-    'tables',
-    'fenced-code',
-    'footnotes',
-    'autolink',
-    'strikethrough',
-    'underline',
-    'highlight',
-    'quote',
-    'superscript',
-    'math',
-    # 'no-intra-emphasis',
-    'space-headers',
-    'math-explicit',
-    'disable-indented-code',
-)
-md = m.Markdown(renderer, extensions=ex)
-
-
-def gfm(str_md=''):
-    '''
-    transform the markdown text to html, using github favoured markdown
-    usage: str_html = gfm(str_md)
-    '''
-    return md(str_md)
-    # str_html = misaka.html(str_md,
-    #                        extensions=misaka.EXT_NO_INTRA_EMPHASIS | misaka.EXT_FENCED_CODE |
-    #                        misaka.EXT_AUTOLINK | misaka.HTML_HARD_WRAP |
-    #                        misaka.EXT_TABLES | misaka.HTML_USE_XHTML |
-    #                        misaka.HTML_HARD_WRAP)
-    # return str_html
 
 
 def getContent(name):
@@ -143,14 +112,17 @@ class blog(RequestHandler):
             self.redirect('/' + name)
         else:
             content = getContent(name)
-            content = gfm(content)
+
+            content = md.convert(content)
+            print(md.toc)
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
 
             self.render('./blog.html', title=name, content=content, time=time,
                         modify_time=modify_time, pre=pre, old=old,
                         author=AUTHOR,
-                        author_link=AUTHOR_LINK
+                        author_link=AUTHOR_LINK,
+                        toc=md.toc
                         )
 
 
