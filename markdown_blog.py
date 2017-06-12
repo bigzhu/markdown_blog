@@ -110,7 +110,8 @@ class blog(RequestHandler):
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
-            self.redirect('/' + name)
+            url_name = urllib.parse.quote(name)
+            self.redirect('/' + url_name)
         else:
             content = getContent(name)
 
