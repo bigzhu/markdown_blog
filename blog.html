@@ -191,12 +191,12 @@
                 console.log()
                 if (ev.velocityX >=0.5) {
                     {% if pre is not None%}
-                    window.location = '/'+'{{pre}}';
+                    window.location = '/'+'{{urllib.parse.quote(pre)}}';
                     {% end %}
                 }
                 if (ev.velocityX <=-0.5) {
                     {% if old is not None%}
-                    window.location = '/'+'{{old}}';
+                    window.location = '/'+'{{urllib.parse.quote(old)}}';
                     {% end %}
                 }
             });
