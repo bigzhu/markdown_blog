@@ -67,9 +67,9 @@ def getContent(name):
     try:
         name_file = open(MD_PATH + name + '.md', 'r')
         content = name_file.read()
+        name_file.close()
         if 'status: draft' in content:
             return '# 这是一个机密文件, 不允许查看!'
-        name_file.close()
         return content
     except IOError:
         print(public_bz.getExpInfoAll())
