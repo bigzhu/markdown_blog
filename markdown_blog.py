@@ -10,7 +10,6 @@ import tornado.ioloop
 import tornado.web
 import time
 import os
-import public_bz
 import urllib
 
 from tornado.web import RequestHandler
@@ -64,16 +63,13 @@ def removeSuffix(name):
 def getContent(name):
     if name in NOT_IN:
         return '# 不要乱访问哦! 这不是你有权限可以看的东西!'
-    try:
-        name_file = open(MD_PATH + name + '.md', 'r')
-        content = name_file.read()
-        name_file.close()
-        if 'status: draft' in content:
-            return '# 这是一个机密文件, 不允许查看!'
-        return content
-    except IOError:
-        print(public_bz.getExpInfoAll())
-        return '0'
+
+    name_file = open(MD_PATH + name + '.md', 'r')
+    content = name_file.read()
+    name_file.close()
+    if 'status: draft' in content:
+        return '# 这是一个机密文件, 不允许查看!'
+    return content
 
 
 def getModifyTime(name):
@@ -116,7 +112,7 @@ class blog(RequestHandler):
             content = getContent(name)
 
             content = md.convert(content)
-            print(md.toc)
+            # print(md.toc)
             modify_time = getModifyTime(name)
             pre, old = preAndOld(name)
 
