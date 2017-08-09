@@ -80,8 +80,8 @@ def getModifyTime(name):
 def preAndOld(name):
     mds = search(MD_PATH, '*.md', NOT_IN)
     for index, item in enumerate(mds):
-        print(item[0])
-        print(name)
+        # print(item[0])
+        # print(name)
         if item[0] == name + '.md':
             break
     else:
@@ -103,6 +103,13 @@ class blog(RequestHandler):
     '''
 
     def get(self, name=None):
+        import gc
+        import objgraph
+        # 强制进行垃圾回收
+        gc.collect()
+        # 打印出对象数目最多的 50 个类型信息
+        objgraph.show_most_common_types(limit=50)
+
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
