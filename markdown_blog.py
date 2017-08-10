@@ -114,6 +114,7 @@ class blog(RequestHandler):
 
         if self.request.uri in FUCK_THE_SPIDER:
             self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
+            print('!!!!fuck: ' + self.request.uri)
             return
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
