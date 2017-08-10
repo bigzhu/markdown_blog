@@ -35,7 +35,9 @@ if NOT_IN:
     NOT_IN = NOT_IN.split(',')
 
 MD_PATH = home + '/Dropbox/blog/'
-
+FUCK_THE_SPIDER = []
+FUCK_THE_SPIDER.append('/ganglia/index.php')
+FUCK_THE_SPIDER.append('/phpmyadmin/')
 try:
     import pygments
 except ImportError:
@@ -110,6 +112,9 @@ class blog(RequestHandler):
         # 打印出对象数目最多的 50 个类型信息
         objgraph.show_most_common_types(limit=5)
 
+        if self.request.uri in FUCK_THE_SPIDER:
+            self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
+            return
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
