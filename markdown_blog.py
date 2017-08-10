@@ -116,6 +116,10 @@ class blog(RequestHandler):
             self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
             print('!!!!fuck: ' + self.request.uri)
             return
+        if name.endswith('.md'):
+            name = removeSuffix(name)
+            self.redirect('/' + name, permanent=True)
+            return
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
