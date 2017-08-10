@@ -108,11 +108,13 @@ class blog(RequestHandler):
         # 强制进行垃圾回收
         gc.collect()
         # 打印出对象数目最多的 50 个类型信息
-        objgraph.show_most_common_types(limit=50)
+        objgraph.show_most_common_types(limit=5)
 
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
+            del mds
+
             url_name = urllib.parse.quote(name)
             self.redirect('/' + url_name)
         else:
