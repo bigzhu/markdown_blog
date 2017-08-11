@@ -38,6 +38,21 @@ MD_PATH = home + '/Dropbox/blog/'
 FUCK_THE_SPIDER = []
 FUCK_THE_SPIDER.append('/ganglia/index.php')
 FUCK_THE_SPIDER.append('/phpmyadmin/')
+FUCK_THE_SPIDER.append('/hwi/')
+FUCK_THE_SPIDER.append('/master-status')
+FUCK_THE_SPIDER.append('/dfshealth.html')
+FUCK_THE_SPIDER.append('/clusters.jsf')
+FUCK_THE_SPIDER.append('/index.php')
+FUCK_THE_SPIDER.append('/jobs/')
+FUCK_THE_SPIDER.append('/install/index.php')
+FUCK_THE_SPIDER.append('/plugins/content/s5_media_player/helper.php?fileurl=Li4vLi4vLi4vY29uZmlndXJhdGlvbi5waHA=')
+FUCK_THE_SPIDER.append('/uddiexplorer/SearchPublicRegistries.jsp?operator=http://www.alibaba.com/&rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Business+location&btnSubmit=Search')
+FUCK_THE_SPIDER.append('/dfshealth.jsp')
+FUCK_THE_SPIDER.append('/hadoop/dfshealth.jsp')
+FUCK_THE_SPIDER.append('/cogfqduzlrxy')
+FUCK_THE_SPIDER.append('/jenkins/')
+FUCK_THE_SPIDER.append('/zabbix/')
+FUCK_THE_SPIDER.append('/solr/')
 try:
     import pygments
 except ImportError:
@@ -112,10 +127,12 @@ class blog(RequestHandler):
         # 打印出对象数目最多的 50 个类型信息
         objgraph.show_most_common_types(limit=5)
 
-        if self.request.uri in FUCK_THE_SPIDER:
-            self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
-            print('!!!!fuck: ' + self.request.uri)
-            return
+        # if self.request.uri in FUCK_THE_SPIDER:
+        for i in FUCK_THE_SPIDER:
+            if self.request.uri.startswith(i):
+                self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
+                print('!!!!fuck: ' + self.request.uri)
+                return
         if name.endswith('.md'):
             name = removeSuffix(name)
             self.redirect('/' + name, permanent=True)
