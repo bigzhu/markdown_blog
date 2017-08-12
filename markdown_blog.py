@@ -110,7 +110,10 @@ def preAndOld(name):
         return None, removeSuffix(mds[index + 1][0])
     if index == len(mds):
         return removeSuffix(mds[index - 1][0]), None
-    return removeSuffix(mds[index - 1][0]), removeSuffix(mds[index + 1][0])
+    pre = removeSuffix(mds[index - 1][0])
+    old = removeSuffix(mds[index + 1][0])
+    del mds
+    return pre, old
 
 
 class blog(RequestHandler):
