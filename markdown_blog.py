@@ -140,6 +140,10 @@ class blog(RequestHandler):
             name = removeSuffix(name)
             self.redirect('/' + name, permanent=True)
             return
+        if name.endswith('.html'):
+            name = removeSuffix(name)
+            self.redirect('/' + name, permanent=True)
+            return
         if name is None or name == '':
             mds = search(MD_PATH, '*.md', NOT_IN)
             name = removeSuffix(mds[0][0])
