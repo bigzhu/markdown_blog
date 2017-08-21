@@ -37,7 +37,7 @@ if NOT_IN:
 MD_PATH = home + '/Dropbox/blog/'
 FUCK_THE_SPIDER = []
 FUCK_THE_SPIDER.append('/ganglia/index.php')
-FUCK_THE_SPIDER.append('/phpmyadmin/')
+FUCK_THE_SPIDER.append('/phpmyadmin')
 FUCK_THE_SPIDER.append('/hwi/')
 FUCK_THE_SPIDER.append('/master-status')
 FUCK_THE_SPIDER.append('/dfshealth.html')
@@ -167,6 +167,9 @@ class blog(RequestHandler):
                         urllib=urllib
                         )
 
+    def post(self):
+        self.redirect('http://zt.bdinfo.net/speedtest/wo3G.rar')
+        print('!!!!fuck: ' + self.request.uri)
 
 if __name__ == "__main__":
     the_class = globals().copy()
